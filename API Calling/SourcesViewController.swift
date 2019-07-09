@@ -8,13 +8,14 @@
 
 import UIKit
 
-class SourceViewController: UITableViewController {
+class SourcesViewController: UITableViewController {
+    
+    var sources = [[String: String]]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        self.title = "Criminals"
+        let query = "http://nflarrest.com/api/v1/player"
     }
-
-
 }
 
