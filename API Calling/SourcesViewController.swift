@@ -15,7 +15,36 @@ class SourcesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Criminals"
-        let query = "http://nflarrest.com/api/v1/player"
+        let query = "https://nflarrest.com/api/v1/player"
+        if let url = URL(string: query) {
+            print("this works")
+            if let data = try? Data(contentsOf: url) {
+                let json = try! JSON(data: data)
+                parse(json: json)
+                return
+            }
+        }
+        loadError()
+    }
+    
+    func parse(json: JSON) {
+        for result in json["sources"].arrayValue {
+            let Name = result["Name"].stringValue
+            let Team = result["Team"].stringValue
+            let Team_name = result["Team_name"].stringValue
+            let Team_city = result["Team_city"].stringValue
+            let Position = result["Position"].stringValue
+            let arrest_count = result["arrest_count"].stringValue
+            let source = ["Name": Name, "Team": Team, "Team_name": Team_name, "Team_city": Team_city, "Position": Position, "arrest_count": arrest_count]
+            sources.append(source)
+        }
+        tableView.reloadData()
+    }
+    
+    func loadError() {
+        let alert = UIAlertController(title: "Loading Error", message: "There was a problem loading the criminal list", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
 
