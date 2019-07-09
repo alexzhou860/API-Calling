@@ -28,7 +28,7 @@ class SourcesViewController: UITableViewController {
     }
     
     func parse(json: JSON) {
-        for result in json["sources"].arrayValue {
+        for result in json.arrayValue {
             let Name = result["Name"].stringValue
             let Team = result["Team"].stringValue
             let Team_name = result["Team_name"].stringValue
@@ -48,10 +48,12 @@ class SourcesViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("counts sources")
         return sources.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("other func")
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let source = sources[indexPath.row]
         cell.textLabel?.text = source["Name"]
